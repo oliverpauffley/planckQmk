@@ -17,7 +17,7 @@
 #include QMK_KEYBOARD_H
 #include "muse.h"
 
-
+//Define layers
 enum planck_layers {
   _QWERTY,
   _LOWER,
@@ -30,9 +30,14 @@ enum planck_keycodes {
   QWERTY = SAFE_RANGE,
 };
 
+// Define layer shortcodes
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 #define FUNCL MO(_FN)
+
+// Define music shortcodes
+
+
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
@@ -87,7 +92,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0, KC_BSPC,
     _______, _______, _______, _______, _______, _______, _______,    KC_4,    KC_5,    KC_6, KC_PPLS, _______,
     _______, _______, _______, _______, _______, _______, _______,    KC_1,    KC_2,    KC_3, KC_MINS,  KC_EQL,
-    _______, _______, _______, _______, _______, _______, _______,    KC_0,  KC_DOT, _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, _______,    KC_0,  KC_DOT, _______, _______
 ),
 
 /* Function
@@ -106,7 +111,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______,  KC_F11,  KC_F12, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, 
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
-),
+ ),
 
 /* Adjust (Lower + Raise)
  *                      v------------------------RGB CONTROL--------------------v

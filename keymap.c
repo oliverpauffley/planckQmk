@@ -28,7 +28,9 @@ enum planck_layers {
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
+  FF7
 };
+
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -59,7 +61,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_FN] = LAYOUT_planck_grid(
     _______,   KC_F1,   KC_F2,     KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,      KC_F8,   KC_F9,  KC_F10,        , 
-    _______,  KC_F11,  KC_F12,    _______, _______, _______, _______, _______,   _______, _______, _______, _______, 
+    _______,  KC_F11,  KC_F12,    _______,     FF7, _______, _______, _______,   _______, _______, _______, _______, 
     _______, _______, _______,KC__VOLDOWN, KC_MPRV, KC_MUTE, KC_MPLY, KC_MNXT, KC__VOLUP, _______, _______, _______, 
     _______, _______, _______,    _______, _______, _______, _______, _______,   _______, _______, _______, _______
  ),
@@ -76,6 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 #ifdef AUDIO_ENABLE
   float plover_song[][2]     = SONG(PLOVER_SOUND);
   float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
+  float victory_song[][2] = SONG(VICTORY);
 #endif
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -86,7 +89,7 @@ bool muse_mode = false;
 uint8_t last_muse_note = 0;
 uint16_t muse_counter = 0;
 uint8_t muse_offset = 70;
-uint16_t muse_tempo = 50;
+uint16_t muse_tempo = 10;
 
 void encoder_update(bool clockwise) {
   if (muse_mode) {
@@ -181,3 +184,14 @@ bool music_mask_user(uint16_t keycode) {
       return true;
   }
 }
+bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case FF7:
+      if (record->event.pressed) {
+        PLAY_SONG(victory_song);
+      } else {
+      }
+      break;
+  }
+  return true;
+};

@@ -31,6 +31,16 @@ enum planck_keycodes {
   FF7
 };
 
+// tap dance codes
+enum {
+	TD_POUND_HASH,
+};
+
+// Tap Dance definitions
+qk_tap_dance_action_t tap_dance_actions[] = {
+    // Tap once for Escape, twice for Caps Lock
+    [TD_POUND_HASH] = ACTION_TAP_DANCE_DOUBLE(KC_HASH, KC_NONUS_HASH),
+};
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -46,10 +56,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 ),
 
 [_LOWER] = LAYOUT_planck_grid(
-    KC_TILD, KC_EXLM,   KC_AT, KC_HASH,  KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS,    KC_EQL,  KC_DEL,
-    _______, _______, KC_LCBR, KC_LBRC, KC_LPRN, KC_NUBS, KC_QUOT, KC_RPRN, KC_RBRC, KC_RCBR,S(KC_SCLN), _______,
-    _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,   KC_PIPE, _______,
-    _______, _______, _______, _______, _______, KC_BSLS, KC_BSLS, _______, _______, _______,   _______, _______ 
+    KC_TILD, KC_EXLM,   KC_AT, TD(TD_POUND_HASH),  KC_DLR, KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS,    KC_EQL,  KC_DEL,
+    _______, _______, KC_LCBR,           KC_LBRC, KC_LPRN, KC_NUBS, KC_QUOT, KC_RPRN, KC_RBRC, KC_RCBR,S(KC_SCLN), _______,
+    _______, _______, _______,           _______, _______, _______, _______, _______, _______, _______,   KC_PIPE, _______,
+    _______, _______, _______,           _______, _______, KC_BSLS, KC_BSLS, _______, _______, _______,   _______, _______ 
 ),
 
 [_RAISE] = LAYOUT_planck_grid(

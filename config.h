@@ -11,6 +11,8 @@
         { SONG(QWERTY_SOUND), SONG(COLEMAK_SOUND), SONG(DVORAK_SOUND) }
 #endif
 
+#define TAPPING_TERM 200
+
 // Define some songs:
 #define IMPERIAL \
   HD_NOTE(_A4), \

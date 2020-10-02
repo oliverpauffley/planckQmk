@@ -39,7 +39,7 @@ enum {
 // Tap Dance definitions
 qk_tap_dance_action_t tap_dance_actions[] = {
     // Tap once for Escape, twice for Caps Lock
-    [TD_POUND_HASH] = ACTION_TAP_DANCE_DOUBLE(KC_HASH, KC_NONUS_HASH),
+    [TD_POUND_HASH] = ACTION_TAP_DANCE_DOUBLE(KC_HASH, KC_NONUS_BSLASH),
 };
 
 #define LOWER MO(_LOWER)

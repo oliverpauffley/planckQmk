@@ -26,7 +26,7 @@
 
 #define COIN\
     E__NOTE(_A5  ),\
-    HD_NOTE(_E6  ),
+    HD_NOTE(_E6  )
 
 #define ZELDA_P\
     Q__NOTE(_G5),\

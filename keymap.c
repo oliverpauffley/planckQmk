@@ -23,11 +23,14 @@ enum planck_layers {
   _LOWER,
   _RAISE,
   _FN,
-  _ADJUST
+  _ADJUST,
+  _GAMING
 };
 
 enum planck_keycodes {
   QWERTY = SAFE_RANGE,
+  GAMING_ON,
+  GAMING_OFF,
   FF7
 };
 
@@ -58,10 +61,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
 [_LOWER] = LAYOUT_planck_grid(
     KC_TILD, KC_EXLM,   KC_AT, TD(TD_POUND_HASH),  KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_MINS,    KC_EQL,  KC_DEL,
-    _______, _______, KC_LCBR,           KC_LBRC, KC_LPRN, KC_GRAVE, KC_QUOT, KC_RPRN, KC_RBRC, KC_RCBR,S(KC_SCLN), _______,
-    _______, _______, _______,           _______, _______,  _______, _______, _______, _______, _______,   KC_PIPE, _______,
+    KC_PAST, KC_PEQL, KC_LCBR,           KC_LBRC, KC_LPRN, KC_GRAVE, KC_QUOT, KC_RPRN, KC_RBRC, KC_RCBR,S(KC_SCLN), _______,
+    KC_PDOT, KC_PCMM, KC_PSLS,           KC_PMNS, _______,  _______, _______, _______, _______, _______,   KC_PIPE, _______,
     _______, _______, _______,           _______, _______,  KC_NUBS, KC_NUBS, _______, _______, _______,   _______, _______ 
-),
+), 
 
 [_RAISE] = LAYOUT_planck_grid(
     _______,    KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,      KC_0,  KC_DEL,
@@ -76,12 +79,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, _______, _______,KC__VOLDOWN, KC_MPRV, KC_MUTE, KC_MPLY, KC_MNXT, KC__VOLUP, _______, _______, _______, 
     _______, _______, _______,    _______, _______, _______, _______, _______,   _______, _______, _______, _______
  ),
+[_GAMING] = LAYOUT_planck_grid(
+     KC_B, KC_1, KC_2, KC_3, KC_4, KC_5,   KC_6, KC_7, KC_8, KC_9   , KC_0   , KC_BSPC ,
+     KC_TAB, KC_Q, KC_W, KC_E, KC_R, KC_T,   KC_Y, KC_U, KC_I, KC_O   , KC_P   , KC_ENT  ,
+     CTL_T(KC_ESC), KC_A, KC_S, KC_D, KC_F, KC_G,   KC_H, KC_J, KC_K, KC_L   , KC_SCLN, KC_RSFT ,
+     KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_SPC, KC_SPC, KC_N, KC_M, KC_COMM, KC_DOT , GAMING_OFF 
+),
 
 [_ADJUST] = LAYOUT_planck_grid(
     _______, RESET,   DEBUG,   RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD,  RGB_VAI, RGB_VAD, KC_DEL ,
     _______, _______, MU_MOD,  AU_ON,   AU_OFF,  AG_NORM, AG_SWAP,  QWERTY,  _______,  _______, _______, _______,
     _______, MUV_DE,  MUV_IN,  MU_ON,   MU_OFF,  _______, _______, _______,  _______,  _______, _______, _______,
-    _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, _______, _______
+    _______, _______, _______, _______, _______, _______, _______, _______,  _______,  _______, _______, GAMING_ON
 )
 
 };
@@ -90,6 +99,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   float plover_song[][2]     = SONG(PLOVER_SOUND);
   float plover_gb_song[][2]  = SONG(PLOVER_GOODBYE_SOUND);
   float victory_song[][2] = SONG(VICTORY);
+  float coin_song[][2] = SONG(COIN);
 #endif
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -203,6 +213,29 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       } else {
       }
       break;
-  }
+    case GAMING_ON:
+      if (record-> event.pressed) {
+#ifdef AUDIO_ENABLE
+	      PLAY_SONG(coin_song);
+#endif
+	      layer_off(_RAISE);
+	      layer_off(_LOWER);
+	      layer_off(_ADJUST);
+	      layer_off(_FN);
+	      layer_on(_GAMING);
+      }
+      return false;
+      break;
+    case GAMING_OFF:
+      if (record-> event.pressed) {
+#ifdef AUDIO_ENABLE
+	      PLAY_SONG(victory_song);
+#endif
+	      layer_off(_GAMING);
+      }
+      return false;
+      break;
+      }
+  
   return true;
 };
